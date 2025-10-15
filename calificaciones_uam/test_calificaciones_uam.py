@@ -1,5 +1,5 @@
 import unittest
-from calificaciones_uam.calificaciones_uam import calificacion
+from calificaciones_uam import calificacion
 
 class test_calificacion(unittest.TestCase):
     def test_calificacionA(self):
@@ -15,6 +15,24 @@ class test_calificacion(unittest.TestCase):
         
     def test_calificacionNA(self):
         self.assertEqual(calificacion(1), "NA")
+        
+    def test_puntaje_negativo_invalido(self):
+        for c in range(1,10):
+            with self.subTest(c=c):
+                with self.assertRaises(ValueError):
+                    calificacion(-c)
+                    
+    def test_puntaje_positivo_invalido(self):
+        for c in (11,30):
+            with self.subTest(c=c):
+                with self.assertRaises(ValueError):
+                    calificacion(c)
+                    
+    def test_tipo_de_dato(self):
+        for c in ["x", [1,2], dict()]:
+            with self.subTest(c=c):
+                with self.assertRaises(TypeError):
+                    calificacion(c)
 
 #Ejecutar el codigo
 if __name__ == "__main__":
