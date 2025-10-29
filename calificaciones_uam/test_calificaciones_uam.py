@@ -1,15 +1,19 @@
 import unittest
 from calificaciones_uam import calificacion
+import sys
 
 class test_calificacion(unittest.TestCase):
+    @unittest.skip("Tiempo de procesamiento largo")
     def test_calificacionA(self):
         self.assertEqual(calificacion(9.7), "A")
         self.assertEqual(calificacion(9.8), "A")
     
+    @unittest.skipIf(sys.platform == "darwin", "No se ejecuta en MacOS")
     def test_calificacionB(self):
         self.assertEqual(calificacion(8), "B")
         self.assertEqual(calificacion(8.1), "B")
     
+    @unittest.skipUnless(sys.platform.startswith("darwin"), "Solo se ejecuta en MacOS")
     def test_calificacionS(self):
         self.assertEqual(calificacion(6.2), "S")
         

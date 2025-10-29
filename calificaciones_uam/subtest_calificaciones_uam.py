@@ -1,20 +1,30 @@
 import unittest
-from calificaciones_uam.calificaciones_uam import calificacion
+from calificaciones_uam import calificacion
 
 class test_calificacion(unittest.TestCase):
+    def test_excepciones(self):
+        """Prueba de excepciones y mensaje"""
+        with self.assertRaisesRegex(ValueError,r"^El puntaje está fuera de rango, se recibió "):
+            calificacion(13)
+            
+        with self.assertRaisesRegex(TypeError,r"^El puntaje debe ser int o float, se recibió "):
+            calificacion("13")
+        
     def test_puntaje_invalido_negativo(self):
         """Prueba de puntaje inválido negativo"""
         for i in range (-10, 0):
-            puntaje = i/10
+            puntaje = str(i/10)
             with self.subTest(puntaje=puntaje):
-                self.assertEqual(calificacion(puntaje),f"Puntaje inválido: {puntaje}")
+                with self.assertRaisesRegex(TypeError, r"^El puntaje debe ser int o float, se recibió "):
+                    calificacion(puntaje)
     
     def test_puntaje_invalido_positivo(self):
         """Prueba de puntaje inválido positivo"""
-        for i in range (101, 200):
-            puntaje = i/10
+        for i in range (11,21):
+            puntaje = -i
             with self.subTest(puntaje=puntaje):
-                self.assertEqual(calificacion(puntaje),f"Puntaje inválido: {puntaje}")
+                with self.assertRaisesRegex(ValueError, r"^El puntaje está fuera de rango, se recibió "):
+                    calificacion(puntaje)
                 
     def test_calificacionA(self):
         """Prueba de calificación A"""
