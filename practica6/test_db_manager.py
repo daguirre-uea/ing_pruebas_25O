@@ -29,6 +29,6 @@ class TestClientes(unittest.TestCase):
               1
               )
         # Llamada 2: commit()
-
+        
 if __name__ == "__main__":
     unittest.main(verbosity=2)
